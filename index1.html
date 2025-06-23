@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Memoria Visual</title>
+  <link rel="shortcut icon" href="numbers.ico" type="image/x-icon">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      width: 80%;
+      margin: 0 auto;
+      background-image: url('fondo.jpg');
+      background-repeat: no-repeat; /* Evita que se repita */
+      background-position: right top; /* Alinea la imagen a la derecha */
+    }
+
+    h1 {
+      font-size: 1.5em;
+      font-weight: normal;
+      text-align: center;
+    }
+
+    #inicio {
+      background-color: rgba(255,255,255,0.5);
+    }
+    #inicio p {
+      font-size: 0.8em;
+    }
+
+    select {
+      width: 3em;
+    }
+
+    button {
+      margin: 0 4px;
+      padding: 5px 10px;
+      border: 0.5px red inset;
+      border-radius: 5%;
+      background-color: ghostwhite;
+      cursor: pointer;
+    }
+
+    #numeros, #respuesta, #resultado {
+      text-align: center;
+    }
+
+    #numeros span {
+      display: inline-block;
+      font-size: 2em;
+      margin: 5px;
+      padding: 1px 5px;
+      text-align: center;
+      border: 1px solid red;
+    }
+
+    #respuesta input {
+      font-size: 2em;
+      width: 2em;
+      margin: 5px;
+      text-align: center;
+      border: 1px solid red;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Juego de Memoria Visual con Números</h1>
+  <div id="inicio">
+    <p>Entrena tu memoria visual con este juego. Aparecerá un tablero con 5 a 9 números, que permanecerá en pantalla unos segundos. Al desaparecer, deberás escribir los números en el mismo orden en el cual los has visto y presionar el botón <code>Comprobar</code>. Una vez comprobado, presionar <code>Reiniciar.</code></p>
+    <p>
+      <label>¿Con cuántos números quieres jugar?</label>
+      <select id="cantNumeros">
+        <option value="5" selected>5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+      </select>
+    <button type="button" id="jugar" onclick="crearSecuencia()">Comenzar</button>
+    <button type="button" disabled id="comprobar" onclick="comprobar()">Comprobar</button>
+    <button type="button" id="reiniciar" onclick="nuevoJuego()">Reiniciar</button>
+    </p>
+  </div>
+
+  <div id="numeros">
+
+  </div>
+  <hr>
+  <div id="respuesta">
+
+  </div>
+  <div>
+    <p id="resultado"></p>    
+  </div>
+
+  <script>
+    const CANTIDAD_NUMEROS = document.getElementById('cantNumeros');
+    const NUMEROS = document.getElementById("numeros");
+    const secuencia = [];
+    let cantidad;
+
+    function crearSecuencia() {
+      NUMEROS.innerHTML = ''; // Limpia el div antes de agregar nuevos elementos
+
+      cantidad = parseInt(CANTIDAD_NUMEROS.value);
+
+      for (let i = 0; i < cantidad; i++) {
+        let num = Math.floor(Math.random() * 501); // Número entre 0 y 500
+        secuencia.push(num);
+         
+       
+
+        let valor = document.createElement("span");
+        valor.innerHTML = num;
+        NUMEROS.appendChild(valor);
+      }
+
+      setTimeout(() => {
+        NUMEROS.style.display = "none"; // Oculta los números después de unos segundos
+        mostrarInputsUsuario();
+      }, 5000); // escribir 1000 para 1 segundo
+
+    }
+
+    function mostrarInputsUsuario() {
+      const respuestaDiv = document.getElementById("respuesta");
+      respuestaDiv.innerHTML = '';
+
+      for (let i = 0; i < cantidad; i++) {
+        let input = document.createElement("input");
+        input.type = "text";
+        input.id = "num"+i;
+        respuestaDiv.appendChild(input);
+      }
+
+      document.getElementById("comprobar").disabled = false; 
+      // Habilita el botón de comprobación
+    }
+
+    function comprobar() {
+      const inputs = document.querySelectorAll("#respuesta input");
+      let aciertos = 0;
+      let entrada = 0;
+      let inputId = 0
+
+      for (let i = 0; i < cantidad; i++) {
+        inputId = "num"+i;
+        entrada= parseInt(document.getElementById(inputId).value);
+        if (entrada === secuencia[i]) {
+          aciertos++;
+        }
+      }
+
+      document.getElementById("resultado").innerText = `Aciertos: ${aciertos} de ${secuencia.length}`;
+      document.getElementById("numeros").style.display = "block"; 
+      // Vuelve a mostrar la secuencia original
+      document.getElementById("comprobar").disabled = true;
+      document.getElementById("reiniciar").disabled = false;
+
+    }
+
+    function nuevoJuego() {
+      secuencia.length = 0; // vacía el array
+      cantidad=0;
+      document.getElementById("numeros").innerHTML = '';
+      document.getElementById("numeros").style.display='block';
+      document.getElementById("respuesta").innerHTML = '';
+      document.getElementById("resultado").innerText = '';
+      document.getElementById("comprobar").disabled = true;
+    }
+
+
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <header>
+        <h1>Juego de memorización de palabras</h1>
+    </header>
+    <main>
+
+
+        <p>
+
+            <strong>Te explicaré cómo funciona esto:</strong>
+        </p>
+
+        <ol>
+
+            <li>Más abajo tienes la opción de escoger una cantidad de palabras</li>
+            <li>Para cambiar el número, haz clic en la flecha al lado del número</li>
+            <li>Haz clic en "Comenzar"</li>
+            <li>Memoriza las palabras que aparezcan</li>
+            <li>Luego tendrás que escribir cada una de las palabras</li>
+            <li>Escríbelas en el campo correspondiente</li>
+            <li>Haz clic en "Comprobar" después de escribirlas</li>
+            <li>¡Disfruta los resultados!</li>
+
+
+        </ol>
+
+
+        <div id="inicio">
+            <p>Elige la cantidad de palabras:
+
+                <select name="opciones" id="cantidadPalabras">
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+
+                </select>
+
+                <button type="button" id="jugar" onclick="escogerPalabras()">Comenzar</button>
+                <button type="button" disabled id="comprobar" onclick="comprobar()">Comprobar</button>
+                <button type="button" id="reiniciar" onclick="nuevoJuego()">Reiniciar</button>
+
+            </p>
+        </div>
+
+        <div id="palabras">
+
+        </div>
+        <hr>
+        <div id="respuesta">
+
+        </div>
+
+    </main>
+
+    <footer>
+
+        <div>
+
+            <p id="resultado"></p>
+
+        </div>
+
+
+    </footer>
+
+
+    <script src="./js/JuegoMemoria.js"></script>
+</body>
+
+</html>
